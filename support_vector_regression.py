@@ -26,9 +26,9 @@ regressor.fit(X, y.reshape(len(y),))
 # Predicting a New Result
 # Scaling it to match the model
 level_to_predict = sc_X.transform([[6.5]])
-y_pred = regressor.predict(level_to_predict)
+y_predict = regressor.predict(level_to_predict)
 # Bringing back to original scale
-sc_y.inverse_transform(y_pred)
+sc_y.inverse_transform(y_predict)
 
 # Visualizing the SVR Results
 plt.scatter(sc_X.inverse_transform(X), sc_y.inverse_transform(y), color='red')

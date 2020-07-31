@@ -4,7 +4,7 @@ from constants import resources_dir
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import OneHotEncoder, LabelEncoder, StandardScaler
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 import statsmodels.api as sm
@@ -32,10 +32,12 @@ regressor = LinearRegression()
 regressor.fit(X_train, y_train)
 
 # Predicting the Test Set Results
-y_pred = regressor.predict(X_test)
-y_diff = y_pred - y_test
+y_predict = regressor.predict(X_test)
+y_diff = y_predict - y_test
 np.set_printoptions(precision=2)
-print(np.concatenate((y_pred.reshape(len(y_pred), 1), y_test.reshape(len(y_test), 1), y_diff.reshape(len(y_diff), 1)),1))
+print(np.concatenate((y_predict.reshape(len(y_predict), 1),
+                      y_test.reshape(len(y_test), 1),
+                      y_diff.reshape(len(y_diff), 1)), 1))
 
 # Predicting a Single Result
 regressor.predict([[1, 0, 0, 160000, 130000, 300000]])
@@ -43,7 +45,7 @@ regressor.predict([[1, 0, 0, 160000, 130000, 300000]])
 # Multiple Linear Regression Model Equation
 independent_variables = ['dummy1', 'dummy2', 'dummy3', 'R&D_Spend', 'Admin', 'Marketing']
 equation = "Profit = "
-for key, value in  dict(zip(independent_variables, list(regressor.coef_))).items():
+for key, value in dict(zip(independent_variables, list(regressor.coef_))).items():
     equation += key+"*"+str(value)
     equation += " + "
 equation += str(regressor.intercept_)
@@ -57,7 +59,7 @@ print(equation)
 
 # Removing Dummy Variable Trap
 X = X[:, 1:]
-X = np.append(np.ones((len(X),1)).astype(int), np.array(X, dtype='float64'), 1)
+X = np.append(np.ones((len(X), 1)).astype(int), np.array(X, dtype='float64'), 1)
 
 # Optimal Matrix of Features
 X_opt = X[:, [0, 1, 2, 3, 4, 5]]

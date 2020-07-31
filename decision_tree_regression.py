@@ -1,16 +1,18 @@
 # Importing the Libraries
+import os
+from constants import resources_dir
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.tree import DecisionTreeRegressor
 
 # Importing the Dataset
-dataset = pd.read_csv('Position_Salaries.csv')
+dataset = pd.read_csv(os.path.join(resources_dir, 'Position_Salaries.csv'))
 X = dataset.iloc[:, 1:2].values
 y = dataset.iloc[:, -1].values
 
 # Training the Decision Tree Regression Model on the whole dataset
-# Better to use on dataset with lots of features. It wont give good result on small daatset with limited features
+# Better to use on dataset with lots of features. It wont give good result on small dataset with limited features
 regressor = DecisionTreeRegressor(random_state=0)
 regressor.fit(X, y)
 
